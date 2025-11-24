@@ -1,34 +1,103 @@
-import zipfile, os
-
-base = "/mnt/data/site"
-os.makedirs(base, exist_ok=True)
-os.makedirs(base+"/assets", exist_ok=True)
-
-html_content = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Top Up Games Murah</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .card:hover { transform: translateY(-4px); transition: 0.2s; }
+  </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
-  <header class="bg-blue-600 text-white p-5 shadow-md">
+  <header class="bg-blue-600 text-white p-5 shadow-md sticky top-0 z-50">
     <h1 class="text-3xl font-bold text-center">Top Up Games Murah</h1>
   </header>
-  <p class="text-center p-6">Website siap di-deploy.</p>
+
+  <section class="p-6 max-w-5xl mx-auto">
+    <div class="bg-white p-6 rounded-2xl shadow mb-6">
+      <h2 class="text-2xl font-bold mb-4">Promo Hari Ini 🔥</h2>
+      <p class="text-gray-600">Dapatkan harga termurah & proses tercepat!</p>
+    </div>
+
+    <h2 class="text-2xl font-semibold mb-4">Pilih Game</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div class="card bg-white p-4 rounded-xl shadow cursor-pointer text-center">
+        <img src="https://upload.wikimedia.org/wikipedia/en/0/0c/Mobile_Legends_Bang_Bang_logo.png" class="mx-auto mb-2 h-20" />
+        <p class="font-bold">Mobile Legends</p>
+      </div>
+
+      <div class="card bg-white p-4 rounded-xl shadow cursor-pointer text-center">
+        <img src="https://upload.wikimedia.org/wikipedia/en/5/5f/Garena_Free_Fire_logo.png" class="mx-auto mb-2 h-20" />
+        <p class="font-bold">Free Fire</p>
+      </div>
+
+      <div class="card bg-white p-4 rounded-xl shadow cursor-pointer text-center">
+        <img src="https://upload.wikimedia.org/wikipedia/en/3/32/PUBG_Mobile_logo.png" class="mx-auto mb-2 h-20" />
+        <p class="font-bold">PUBG Mobile</p>
+      </div>
+
+      <div class="card bg-white p-4 rounded-xl shadow cursor-pointer text-center">
+        <img src="https://upload.wikimedia.org/wikipedia/en/4/46/Genshin_Impact_logo.png" class="mx-auto mb-2 h-20" />
+        <p class="font-bold">Genshin Impact</p>
+      </div>
+
+      <div class="card bg-white p-4 rounded-xl shadow cursor-pointer text-center">
+        <img src="https://upload.wikimedia.org/wikipedia/en/5/5f/Valorant_logo.png" class="mx-auto mb-2 h-20" />
+        <p class="font-bold">Valorant</p>
+      </div>
+
+      <div class="card bg-white p-4 rounded-xl shadow cursor-pointer text-center">
+        <img src="https://upload.wikimedia.org/wikipedia/en/3/3f/Call_of_Duty_Mobile_Logo.png" class="mx-auto mb-2 h-20" />
+        <p class="font-bold">Call of Duty Mobile</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="p-6 max-w-5xl mx-auto bg-white rounded-2xl shadow mt-6">
+    <h2 class="text-2xl font-semibold mb-4">Form Top Up</h2>
+
+    <label class="block mb-3">
+      <span class="font-semibold">User ID / Zone ID</span>
+      <input type="text" class="w-full p-2 border rounded mt-1" placeholder="Contoh: 123456 / 1234" />
+    </label>
+
+    <label class="block mb-3">
+      <span class="font-semibold">Nominal Top Up</span>
+      <select class="w-full p-2 border rounded mt-1">
+        <option>Pilih nominal…</option>
+        <option>86 Diamonds (ML) - 20.000</option>
+        <option>172 Diamonds (ML) - 40.000</option>
+        <option>344 Diamonds (ML) - 75.000</option>
+        <option>310 Genesis Crystals - 75.000</option>
+        <option>645 Genesis Crystals - 150.000</option>
+        <option>380 VP - 45.000</option>
+      </select>
+    </label>
+
+    <label class="block mb-3">
+      <span class="font-semibold">Metode Pembayaran</span>
+      <select class="w-full p-2 border rounded mt-1">
+        <option>DANA</option>
+        <option>Gopay</option>
+        <option>QRIS</option>
+      </select>
+    </label>
+
+    <button class="w-full bg-blue-600 text-white p-3 rounded-xl mt-4 shadow hover:bg-blue-700">Proses Top Up</button>
+  </section>
+
+  <section class="p-6 max-w-5xl mx-auto mt-10">
+    <h2 class="text-2xl font-semibold mb-4">Metode Pembayaran</h2>
+    <div class="flex gap-6 items-center">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Logo_dana_blue.svg" class="h-10" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Gopay_logo.svg" class="h-10" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/QRIS_logo.svg" class="h-10" />
+    </div>
+  </section>
+
+  <footer class="text-center p-4 mt-6 text-gray-600">
+    © 2025 Top Up Murah — Cepat & Aman
+  </footer>
 </body>
-</html>"""
-
-with open(base+"/index.html", "w") as f:
-    f.write(html_content)
-
-zip_path = "/mnt/data/topup-website.zip"
-with zipfile.ZipFile(zip_path, "w") as zipf:
-    for root, dirs, files in os.walk(base):
-        for file in files:
-            full_path = os.path.join(root, file)
-            arcname = os.path.relpath(full_path, base)
-            zipf.write(full_path, arcname)
-
-zip_path
+</html>
